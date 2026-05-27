@@ -15,7 +15,30 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        final shouldPop = await showDialog<bool>(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Keluar Aplikasi'),
+              content: const Text('Apakah Anda yakin ingin keluar dari aplikasi?'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context, false),
+                  child: const Text('Batal'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, true),
+                  child: const Text('Keluar', style: TextStyle(color: Colors.red)),
+                ),
+              ],
+            );
+          },
+        );
+        return shouldPop ?? false;
+      },
+      child: Scaffold(
       appBar: AppBar(
         title: const Text('Daftar Catatan Inventaris'),
         actions: [
@@ -131,8 +154,8 @@ class HomePage extends StatelessWidget {
               child: ListTile(
                 contentPadding: const EdgeInsets.all(16),
                 leading: CircleAvatar(
-                  backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                  child: Icon(Icons.folder, color: Theme.of(context).colorScheme.primary),
+                  backgroundColor: themeController.primaryColor.value.withValues(alpha: 0.2),
+                  child: Icon(Icons.folder, color: themeController.primaryColor.value),
                 ),
                 title: Text(
                   record.title,
@@ -169,6 +192,7 @@ class HomePage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddRecordDialog(context),
         child: const Icon(Icons.create_new_folder),
+      ),
       ),
     );
   }

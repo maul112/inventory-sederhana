@@ -16,7 +16,7 @@ class ExportController extends GetxController {
       var sheet = excel['Sheet1'];
 
       List<CellValue> headers = [
-        TextCellValue('ID'),
+        TextCellValue('No'),
         TextCellValue('Nama Barang'),
       ];
       if (category == InventoryCategory.classB) {
@@ -34,9 +34,10 @@ class ExportController extends GetxController {
       }
       sheet.appendRow(headers);
 
-      for (var item in items) {
+      for (int i = 0; i < items.length; i++) {
+        var item = items[i];
         List<CellValue> row = [
-          TextCellValue(item.id),
+          IntCellValue(i + 1),
           TextCellValue(item.name),
         ];
         if (item is ClassInventory) {
