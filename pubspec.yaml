@@ -43,8 +43,8 @@ flutter_launcher_icons:
 
 flutter_native_splash:
   color: "#ffffff"              # Warna background layar awal
-  image: "assets/logo.png"
+  image: "assets/logo_app.png"
   android_12:
-    image: "assets/logo.png"
+    image: "assets/logo_app.png"
     color: "#ffffff"
   web: false                    # Set false karena web punya sistem loading sendiri
