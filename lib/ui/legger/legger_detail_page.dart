@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/inventory_controller.dart';
 import '../../controllers/legger_controller.dart';
-import 'student_manage_page.dart';
-import 'surah_manage_page.dart';
-import 'component_manage_page.dart';
-import 'grade_entry_page.dart';
 
 /// Halaman utama Legger: menu kelola siswa, surah, komponen, dan input nilai
 class LeggerDetailPage extends StatefulWidget {

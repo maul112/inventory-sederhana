@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../controllers/auth_controller.dart';
+import '../controllers/theme_controller.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final themeController = Get.find<ThemeController>();
+    
+    return Obx(() => Scaffold(
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Theme.of(context).colorScheme.primary,
-              Theme.of(context).colorScheme.secondary,
+              themeController.primaryColor.value,
+              themeController.primaryColor.value.withValues(alpha: 0.5),
             ],
           ),
         ),
@@ -83,6 +87,6 @@ class LoginPage extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ));
   }
 }

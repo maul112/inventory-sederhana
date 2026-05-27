@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/services.dart';
 import '../controllers/auth_controller.dart';
 import '../controllers/inventory_controller.dart';
 import '../controllers/theme_controller.dart';
@@ -15,8 +16,10 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
         final shouldPop = await showDialog<bool>(
           context: context,
           builder: (context) {
@@ -36,7 +39,9 @@ class HomePage extends StatelessWidget {
             );
           },
         );
-        return shouldPop ?? false;
+        if (shouldPop ?? false) {
+          SystemNavigator.pop();
+        }
       },
       child: Scaffold(
       appBar: AppBar(
@@ -153,10 +158,10 @@ class HomePage extends StatelessWidget {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               child: ListTile(
                 contentPadding: const EdgeInsets.all(16),
-                leading: CircleAvatar(
+                leading: Obx(() => CircleAvatar(
                   backgroundColor: themeController.primaryColor.value.withValues(alpha: 0.2),
                   child: Icon(Icons.folder, color: themeController.primaryColor.value),
-                ),
+                )),
                 title: Text(
                   record.title,
                   style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
@@ -171,7 +176,7 @@ class HomePage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.edit, color: Colors.blue),
+                      icon: Icon(Icons.edit, color: Theme.of(context).colorScheme.primary),
                       onPressed: () => _showEditRecordDialog(context, record),
                     ),
                     IconButton(
