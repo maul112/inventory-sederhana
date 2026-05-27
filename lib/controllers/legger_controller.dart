@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:excel/excel.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -527,19 +528,25 @@ class LeggerController extends GetxController {
       }
 
       // ── SAVE & SHARE ───────────────────────────────────────────────────────
-      final bytes = excel.save();
-      if (bytes != null) {
-        final dir = await getApplicationDocumentsDirectory();
-        final safe =
-            title.replaceAll(RegExp(r'[^\w\s]+'), '').replaceAll(' ', '_');
-        final ts = DateTime.now().millisecondsSinceEpoch;
-        final path = '${dir.path}/Legger_${safe}_$ts.xlsx';
-        File(path)
-          ..createSync(recursive: true)
-          ..writeAsBytesSync(bytes);
-        await SharePlus.instance.share(
-          ShareParams(files: [XFile(path)], text: 'Legger $title'),
-        );
+      final safe = title.replaceAll(RegExp(r'[^\w\s]+'), '').replaceAll(' ', '_');
+      final ts = DateTime.now().millisecondsSinceEpoch;
+      final fileName = 'Legger_${safe}_$ts.xlsx';
+
+      if (kIsWeb) {
+        excel.save(fileName: fileName);
+      } else {
+        final bytes = excel.save();
+        if (bytes != null) {
+          final dir = await getApplicationDocumentsDirectory();
+          final path = '${dir.path}/$fileName';
+          File(path)
+            ..createSync(recursive: true)
+            ..writeAsBytesSync(bytes);
+          await Share.shareXFiles(
+            [XFile(path)],
+            text: 'Legger $title',
+          );
+        }
       }
     } catch (e) {
       Get.snackbar('Export Error', e.toString(),

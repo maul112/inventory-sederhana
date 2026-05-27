@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:excel/excel.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:share_plus/share_plus.dart';
 import '../models/inventory_item.dart';
 import '../models/class_inventory.dart';
@@ -54,23 +55,26 @@ class ExportController extends GetxController {
         sheet.appendRow(row);
       }
 
-      var fileBytes = excel.save();
-      if (fileBytes != null) {
-        Directory directory = await getApplicationDocumentsDirectory();
-        String safeTitle =
-            title.replaceAll(RegExp(r'[^\w\s]+'), '').replaceAll(' ', '_');
-        String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
-        String filePath =
-            '${directory.path}/Inventaris_${safeTitle}_$timestamp.xlsx';
-        File(filePath)
-          ..createSync(recursive: true)
-          ..writeAsBytesSync(fileBytes);
-        await SharePlus.instance.share(
-          ShareParams(
-            files: [XFile(filePath)],
+      String safeTitle =
+          title.replaceAll(RegExp(r'[^\w\s]+'), '').replaceAll(' ', '_');
+      String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
+      String fileName = 'Inventaris_${safeTitle}_$timestamp.xlsx';
+
+      if (kIsWeb) {
+        excel.save(fileName: fileName);
+      } else {
+        var fileBytes = excel.save();
+        if (fileBytes != null) {
+          Directory directory = await getApplicationDocumentsDirectory();
+          String filePath = '${directory.path}/$fileName';
+          File(filePath)
+            ..createSync(recursive: true)
+            ..writeAsBytesSync(fileBytes);
+          await Share.shareXFiles(
+            [XFile(filePath)],
             text: 'Export Inventaris $title',
-          ),
-        );
+          );
+        }
       }
     } catch (e) {
       Get.snackbar('Export Error', e.toString(),

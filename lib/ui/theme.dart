@@ -10,10 +10,9 @@ class AppTheme {
       primaryColor: primaryColor,
       scaffoldBackgroundColor: lightBackground,
       fontFamily: 'Inter',
-      colorScheme: ColorScheme.light(
-        primary: primaryColor,
-        secondary: primaryColor.withValues(alpha: 0.5),
-        surface: Colors.white,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: primaryColor,
+        brightness: Brightness.light,
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: primaryColor,
@@ -33,10 +32,9 @@ class AppTheme {
       primaryColor: primaryColor,
       scaffoldBackgroundColor: darkBackground,
       fontFamily: 'Inter',
-      colorScheme: ColorScheme.dark(
-        primary: primaryColor,
-        secondary: primaryColor.withValues(alpha: 0.5),
-        surface: const Color(0xFF1E1E1E),
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: primaryColor,
+        brightness: Brightness.dark,
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: darkBackground,
