@@ -4,76 +4,36 @@ Panduan ini akan membantu Anda mengubah kode Flutter Anda menjadi aplikasi Web (
 
 ---
 
-## TAHAP 1: Build Flutter ke Web
+## TAHAP 1: Konfigurasi Otomatis (GitHub Actions)
 
-Langkah pertama adalah menerjemahkan kode Dart Anda menjadi HTML, CSS, dan Javascript.
+Anda tidak perlu mem-build atau meng-upload aplikasi secara manual lagi dari laptop Anda. Semua akan dikerjakan oleh robot GitHub setiap kali Anda melakukan "push" kode.
 
-1. Buka terminal di dalam VS Code (pastikan Anda berada di dalam folder project `listing`).
-2. Jalankan perintah berikut untuk memastikan dukungan Web sudah aktif di Flutter Anda:
+1. Buka terminal di dalam VS Code (pastikan Anda berada di folder `listing`).
+2. Jalankan perintah ini (hanya perlu dilakukan SATU KALI untuk mengaktifkan Firebase):
    ```bash
-   flutter config --enable-web
+   firebase init hosting:github
    ```
-3. Lakukan proses *build* dengan menjalankan perintah ini:
-   ```bash
-   flutter build web --web-renderer canvaskit
-   ```
-   *(Catatan: `canvaskit` membuat performa animasi dan *rendering* web hampir sama mulusnya dengan aplikasi Android).*
-4. Tunggu hingga proses selesai. Jika berhasil, akan muncul folder baru di dalam project Anda: `build/web/`. Di dalam folder inilah letak aplikasi Web Anda yang siap di-hosting.
+3. Jawab pertanyaan di terminal dengan format berikut:
+   - **For which GitHub repository would you like to set up a GitHub workflow?**: `username_anda/nama_repository` (contoh: `maul112/inventory-sederhana`)
+   - **Set up the workflow to run a build script before every deploy?**: `y`
+   - **What script should be run before every deploy?**: `flutter pub get && flutter build web`
+   - **Set up automatic deployment to your site's live channel when a PR is merged?**: `y`
+   - **What is the name of the GitHub branch associated with your site's live channel?**: `main`
 
 ---
 
-## TAHAP 2: Persiapan Firebase CLI
+## TAHAP 2: Deploy ke Internet (Sangat Mudah)
 
-Untuk mengunggah (hosting) file ke Firebase, kita membutuhkan *tool* bawaan Firebase.
+Sekarang, setiap kali Anda selesai mengubah kode (misal memperbaiki error atau menambah fitur), Anda cukup melakukan perintah Git normal untuk meng-upload perubahan ke internet:
 
-1. Jika Anda belum menginstal **Node.js**, silakan download dan instal terlebih dahulu dari [nodejs.org](https://nodejs.org/).
-2. Setelah Node.js terinstal, buka Terminal / Command Prompt baru.
-3. Install Firebase CLI dengan perintah ini:
-   ```bash
-   npm install -g firebase-tools
-   ```
-4. Setelah instalasi selesai, hubungkan terminal dengan akun Google Anda:
-   ```bash
-   firebase login
-   ```
-   *Akan muncul pop-up di browser yang meminta Anda login ke akun Google. Pastikan login dengan akun Google yang memiliki project "listing-inventaris" tersebut.*
+```bash
+git add .
+git commit -m "Deskripsi perubahan Anda"
+git push origin main
+```
 
----
-
-## TAHAP 3: Inisialisasi Firebase Hosting
-
-Sekarang, kita harus memberi tahu Firebase bahwa folder project ini akan menggunakan fitur Hosting.
-
-1. Kembali ke terminal VS Code di dalam folder project `listing`.
-2. Jalankan perintah:
-   ```bash
-   firebase init hosting
-   ```
-3. Anda akan diberikan beberapa pertanyaan oleh Firebase (gunakan tombol panah atas/bawah untuk memilih dan Enter untuk OK):
-   - **Please select an option**: Pilih `Use an existing project`
-   - **Select a default Firebase project**: Pilih project Anda (contoh: `listing-inventaris`)
-   - **What do you want to use as your public directory?**: Ketik `build/web` (LALU ENTER. Ini **sangat penting!**)
-   - **Configure as a single-page app (rewrite all urls to /index.html)?**: Ketik `y` (LALU ENTER)
-   - **Set up automatic builds and deploys with GitHub?**: Ketik `N` (LALU ENTER)
-   - Jika ditanya *File build/web/index.html already exists. Overwrite?*: Ketik `N` (LALU ENTER)
-
-Jika berhasil, akan ada pesan *Firebase initialization complete!*
-
----
-
-## TAHAP 4: Mengunggah (Deploy) ke Internet
-
-Tahap terakhir, mari kita unggah aplikasinya agar *live* di internet!
-
-1. Jalankan perintah ini di terminal VS Code:
-   ```bash
-   firebase deploy --only hosting
-   ```
-2. Tunggu proses *upload* selesai.
-3. Jika berhasil, Firebase akan memberikan sebuah URL. Biasanya bentuknya seperti ini:
-   `https://listing-inventaris.web.app` atau `https://listing-inventaris.firebaseapp.com`
-
-**Selesai! Aplikasi Anda sudah online!**
+**Selesai!** 
+Robot GitHub akan otomatis menginstal Flutter dan mem-build kode Anda di *cloud*. Tunggu sekitar 2-4 menit, dan aplikasi Web Anda akan ter-update otomatis di link Firebase Anda (contoh: `https://listing-inventaris.web.app`).
 
 ---
 
