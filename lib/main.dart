@@ -41,7 +41,7 @@ class MainApp extends StatelessWidget {
     final themeController = Get.find<ThemeController>();
 
     return Obx(() => GetMaterialApp(
-          title: 'Inventaris TK',
+          title: 'Selvyntaris',
           theme: AppTheme.lightTheme(themeController.primaryColor.value),
           darkTheme: AppTheme.darkTheme(themeController.primaryColor.value),
           themeMode: themeController.isDarkMode.value

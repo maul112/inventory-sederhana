@@ -25,6 +25,26 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.4
+  flutter_native_splash: ^2.4.4
 
 flutter:
   uses-material-design: true
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/logo.png"
+  web:
+    generate: true
+    image_path: "assets/logo.png"
+    background_color: "#ffffff" # Ganti dengan kode warna hex sesuai tema Anda
+    theme_color: "#00B4D8"      # Ganti dengan warna tema utama
+
+flutter_native_splash:
+  color: "#ffffff"              # Warna background layar awal
+  image: "assets/logo.png"
+  android_12:
+    image: "assets/logo.png"
+    color: "#ffffff"
+  web: false                    # Set false karena web punya sistem loading sendiri
