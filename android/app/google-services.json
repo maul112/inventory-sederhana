@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "499686733885",
+    "firebase_url": "https://listing-inventaris-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "listing-inventaris",
+    "storage_bucket": "listing-inventaris.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:499686733885:android:6f1ec589a490a5140dd254",
+        "android_client_info": {
+          "package_name": "com.tk.listing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "499686733885-eq2hk772fagcm2kunt5snsmg926hbl6i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tk.listing",
+            "certificate_hash": "c5e19167933de9f2bd20a6a9154fb129a4e49d1f"
+          }
+        },
+        {
+          "client_id": "499686733885-4o0umaom7bkfdsii7efreonrkag1ch60.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBidkIyk0mKxml70RO53Obi-DoC3CBo5Wg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "499686733885-4o0umaom7bkfdsii7efreonrkag1ch60.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "499686733885-63rmc9gm314hj284esi52vum99l99rfd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tk.listing"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
