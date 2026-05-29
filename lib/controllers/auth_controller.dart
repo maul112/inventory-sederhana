@@ -18,6 +18,9 @@ class AuthController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    if (kIsWeb) {
+      auth.setPersistence(Persistence.LOCAL);
+    }
     _user = Rx<User?>(auth.currentUser);
   }
 

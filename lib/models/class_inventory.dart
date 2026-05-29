@@ -24,9 +24,9 @@ class ClassInventory extends InventoryItem {
     return ClassInventory(
       id: id,
       name: map['name'] ?? '',
-      quantity: map['quantity'] ?? 0,
-      condition: map['condition'] ?? 'Layak',
-      fundSource: map['fundSource'] ?? 'BOP',
+      quantity: map['quantity']?.toString() ?? '',
+      condition: map['condition'] ?? '',
+      fundSource: map['fundSource'] ?? '',
     );
   }
 }

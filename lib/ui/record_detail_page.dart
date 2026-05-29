@@ -88,7 +88,7 @@ class RecordDetailPage extends StatelessWidget {
                           'Akan Dibeli: ${item.willBePurchased}',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: item.willBePurchased > 0
+                            color: (item.willBePurchased.isNotEmpty && item.willBePurchased != '0' && item.willBePurchased.toLowerCase() != 'kosong')
                                 ? Colors.orange
                                 : Colors.green,
                           ),

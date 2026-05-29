@@ -42,15 +42,15 @@ class ExportController extends GetxController {
         ];
         if (item is ClassInventory) {
           row.addAll([
-            IntCellValue(item.quantity),
+            TextCellValue(item.quantity),
             TextCellValue(item.condition),
             TextCellValue(item.fundSource),
           ]);
         } else if (item is OfficeInventory) {
           row.addAll([
-            IntCellValue(item.storeQuantity),
-            IntCellValue(item.officeNeeds),
-            IntCellValue(item.willBePurchased),
+            TextCellValue(item.storeQuantity),
+            TextCellValue(item.officeNeeds),
+            TextCellValue(item.willBePurchased),
           ]);
         }
         sheet.appendRow(row);

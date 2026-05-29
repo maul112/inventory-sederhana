@@ -1,17 +1,16 @@
 import 'inventory_item.dart';
 
 class OfficeInventory extends InventoryItem {
-  int storeQuantity;   // jumlah di etalase
-  int officeNeeds;     // kebutuhan kantor
-
-  // Yang akan dibeli = kebutuhan - etalase (tidak negatif)
-  int get willBePurchased => (officeNeeds - storeQuantity).clamp(0, officeNeeds);
+  String storeQuantity;   // jumlah di etalase
+  String officeNeeds;     // kebutuhan kantor
+  String willBePurchased; // yang akan dibeli
 
   OfficeInventory({
     required super.id,
     required super.name,
     required this.storeQuantity,
     required this.officeNeeds,
+    required this.willBePurchased,
   }) : super(
           category: InventoryCategory.office,
           quantity: storeQuantity,
@@ -25,6 +24,7 @@ class OfficeInventory extends InventoryItem {
       'name': name,
       'storeQuantity': storeQuantity,
       'officeNeeds': officeNeeds,
+      'willBePurchased': willBePurchased,
       'category': category.name,
     };
   }
@@ -33,8 +33,9 @@ class OfficeInventory extends InventoryItem {
     return OfficeInventory(
       id: id,
       name: map['name'] ?? '',
-      storeQuantity: map['storeQuantity'] ?? map['remainingQuantity'] ?? 0,
-      officeNeeds: map['officeNeeds'] ?? 0,
+      storeQuantity: map['storeQuantity']?.toString() ?? '',
+      officeNeeds: map['officeNeeds']?.toString() ?? '',
+      willBePurchased: map['willBePurchased']?.toString() ?? '',
     );
   }
 }

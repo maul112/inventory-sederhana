@@ -21,13 +21,14 @@ class _AddItemPageState extends State<AddItemPage> {
 
   // Common fields
   String name = '';
-  int quantity = 0;
+  String quantity = '';
   String condition = 'Layak';
   String fundSource = 'BOP';
 
   // OfficeInventory fields
-  int storeQuantity = 0;
-  int officeNeeds = 0;
+  String storeQuantity = '';
+  String officeNeeds = '';
+  String willBePurchased = '';
 
   @override
   void initState() {
@@ -47,8 +48,10 @@ class _AddItemPageState extends State<AddItemPage> {
     quantity = existingItem!.quantity;
 
     if (existingItem is OfficeInventory) {
-      storeQuantity = (existingItem as OfficeInventory).storeQuantity;
-      officeNeeds = (existingItem as OfficeInventory).officeNeeds;
+      final officeItem = existingItem as OfficeInventory;
+      storeQuantity = officeItem.storeQuantity;
+      officeNeeds = officeItem.officeNeeds;
+      willBePurchased = officeItem.willBePurchased;
     }
   }
 
@@ -93,15 +96,11 @@ class _AddItemPageState extends State<AddItemPage> {
             // ──── KELAS B ────
             if (selectedCategory == InventoryCategory.classB) ...[
               TextFormField(
-                initialValue:
-                    quantity == 0 && !isEdit ? '' : quantity.toString(),
+                initialValue: quantity,
                 decoration: _inputDecoration('Jumlah'),
-                keyboardType: TextInputType.number,
                 validator: (val) =>
-                    val == null || int.tryParse(val) == null
-                        ? 'Wajib berupa angka'
-                        : null,
-                onSaved: (val) => quantity = int.parse(val ?? '0'),
+                    val == null || val.isEmpty ? 'Wajib diisi' : null,
+                onSaved: (val) => quantity = val ?? '',
               ),
               const SizedBox(height: 16),
               TextFormField(
@@ -126,30 +125,27 @@ class _AddItemPageState extends State<AddItemPage> {
             // ──── KANTOR ────
             if (selectedCategory == InventoryCategory.office) ...[
               TextFormField(
-                initialValue: storeQuantity == 0 && !isEdit
-                    ? ''
-                    : storeQuantity.toString(),
+                initialValue: storeQuantity,
                 decoration: _inputDecoration('Jumlah di Etalase'),
-                keyboardType: TextInputType.number,
                 validator: (val) =>
-                    val == null || int.tryParse(val) == null
-                        ? 'Wajib berupa angka'
-                        : null,
-                onSaved: (val) =>
-                    storeQuantity = int.parse(val ?? '0'),
+                    val == null || val.isEmpty ? 'Wajib diisi' : null,
+                onSaved: (val) => storeQuantity = val ?? '',
               ),
               const SizedBox(height: 16),
               TextFormField(
-                initialValue: officeNeeds == 0 && !isEdit
-                    ? ''
-                    : officeNeeds.toString(),
+                initialValue: officeNeeds,
                 decoration: _inputDecoration('Kebutuhan Kantor'),
-                keyboardType: TextInputType.number,
                 validator: (val) =>
-                    val == null || int.tryParse(val) == null
-                        ? 'Wajib berupa angka'
-                        : null,
-                onSaved: (val) => officeNeeds = int.parse(val ?? '0'),
+                    val == null || val.isEmpty ? 'Wajib diisi' : null,
+                onSaved: (val) => officeNeeds = val ?? '',
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                initialValue: willBePurchased,
+                decoration: _inputDecoration('Akan Dibeli'),
+                validator: (val) =>
+                    val == null || val.isEmpty ? 'Wajib diisi' : null,
+                onSaved: (val) => willBePurchased = val ?? '',
               ),
             ],
 
@@ -202,6 +198,7 @@ class _AddItemPageState extends State<AddItemPage> {
           name: name,
           storeQuantity: storeQuantity,
           officeNeeds: officeNeeds,
+          willBePurchased: willBePurchased,
         );
       }
 
